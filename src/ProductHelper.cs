@@ -9,7 +9,7 @@ public static class ProductHelper
 {
 static NpgsqlConnection GetConnection()
 {
-    return new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=cli;User ID=postgres;Password=Pa$$W0rd");
+    return new NpgsqlConnection("Server=127.0.0.1;Port=5432;Database=Cli;User ID=postgres;Password=Pa$$W0rd");
 }
 
 public static string CreateProduct(string code, string name)
@@ -20,16 +20,17 @@ public static string CreateProduct(string code, string name)
     parameters[0] = new NpgsqlParameter("p_code", code);
     parameters[1] = new NpgsqlParameter("p_name", name);
     parameters[2] = new NpgsqlParameter("p_id", p_id);
-    parameters[3] = new NpgsqlParameter("p_created",p_created);
     parameters[2].Direction = ParameterDirection.Output;
+    parameters[3] = new NpgsqlParameter("p_created",p_created);
     parameters[3].Direction = ParameterDirection.Output;
     NpgsqlConnection conn = GetConnection();
     try
     {
         conn.Open();
-        using (NpgsqlCommand cmd = new NpgsqlCommand("usp_insertproduct", conn))
+        string commandText = $"SELECT usp_insertproduct('{code}','{name}')";
+        using (NpgsqlCommand cmd = new NpgsqlCommand(commandText, conn))
         {
-            cmd.CommandType = CommandType.StoredProcedure;
+            //cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddRange(parameters);
             cmd.ExecuteNonQuery();
             //Catch the output parameters values

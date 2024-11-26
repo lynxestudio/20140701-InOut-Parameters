@@ -5,13 +5,12 @@ using TestPg.Products;
 try
 {
     Console.WriteLine(Environment.NewLine);
-    Console.Write("Enter product's code: ");
-    string code = Console.ReadLine();
-    Console.WriteLine("Enter product's name: ");
-    string name = Console.ReadLine();
+    string code = Utilities.Scanf("Enter product's code: ");
+    string name = Utilities.Scanf("Enter product's name: ");
     string msg = ProductHelper.CreateProduct(code,name);
     Console.WriteLine("\n=========== OUTPUT ==========");
-    Console.WriteLine(msg);
+    Utilities.PrintLabel("Product found ",msg);
+    Utilities.Pause();
 }
 catch(Exception ex)
 {
