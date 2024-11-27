@@ -6,10 +6,12 @@ as $$
 begin
 	p_id := nextval('products_id_seq');
 	p_created := now();
-	insert into products(id,product_code
+	insert into products(id
+	,product_code
 	,product_name
 	,created)
-	values(p_id,p_code
+	values(p_id
+	,p_code
 	,p_name
 	,p_created);
 	EXCEPTION
